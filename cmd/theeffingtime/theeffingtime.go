@@ -27,7 +27,7 @@ Pacific: {{.Pacific}} </br>
 `))
 
 func generatedTemplate(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Received Request")
+	fmt.Println("Request Processing")
 	now := time.Now()
 	utc := now.UTC()
 	etz, eerr := time.LoadLocation("America/New_York")
@@ -51,6 +51,7 @@ func init() {
 }
 
 func main() {
+	fmt.Println("Request Received")
 	http.HandleFunc("/", generatedTemplate)
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
