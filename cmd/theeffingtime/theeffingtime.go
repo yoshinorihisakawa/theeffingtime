@@ -22,8 +22,8 @@ var responseTemplate = template.Must(template.New("main").Parse(`
 UTC: {{.UTC}} </br>
 Eastern: {{.Eastern}} </br>
 Pacific: {{.Pacific}} </br>
-
-GitHub: https://www.github.com/darkopsio/theeffingtime
+</br>
+GitHub: <a href="https://www.github.com/darkopsio/theeffingtime">https://www.github.com/darkopsio/theeffingtime</a>
 </body>
 </html>
 `))
