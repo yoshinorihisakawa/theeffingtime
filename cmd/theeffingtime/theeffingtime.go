@@ -27,6 +27,7 @@ Pacific: {{.Pacific}} </br>
 `))
 
 func generatedTemplate(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Received Request")
 	now := time.Now()
 	utc := now.UTC()
 	etz, eerr := time.LoadLocation("America/New_York")
