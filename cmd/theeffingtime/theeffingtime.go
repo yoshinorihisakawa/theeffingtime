@@ -14,7 +14,7 @@ var (
 	version string
 )
 
-var responseTemplate = template.Must(template.New("main").Parse(`
+var responseTemplate = template.Must(template.New("main").Format(`
 <html>
 <head>
 </head>
@@ -38,9 +38,9 @@ func generatedTemplate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(perr)
 	}
 	data := map[string]interface{}{
-		"UTC":     utc.Parse("00:00:00"),
-		"Eastern": now.In(etz).Parse("00:00:00"),
-		"Pacific": now.In(ptz).Parse("00:00:00")}
+		"UTC":     utc.Format("00:00:00"),
+		"Eastern": now.In(etz).Format("00:00:00"),
+		"Pacific": now.In(ptz).Format("00:00:00")}
 	outputBuffer := new(bytes.Buffer)
 	responseTemplate.Execute(outputBuffer, data)
 	fmt.Fprintln(w, outputBuffer)
