@@ -14,7 +14,7 @@ var (
 	version string
 )
 
-var responseTemplate = template.Must(template.New("main").Format(`
+var responseTemplate = template.Must(template.New("main").Parse(`
 <html>
 <head>
 </head>
