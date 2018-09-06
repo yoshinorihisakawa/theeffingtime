@@ -1,13 +1,13 @@
 package main
 
 import (
-	"time"
 	"bytes"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
@@ -19,7 +19,6 @@ var responseTemplate = template.Must(template.New("main").Parse(`
 <head>
 </head>
 <body>
-The current date is: {{.Date}} </br>
 UTC: {{.UTC}} </br>
 Eastern: {{.Eastern}} </br>
 Pacific: {{.Pacific}} </br>
@@ -29,12 +28,18 @@ Pacific: {{.Pacific}} </br>
 
 func generatedTemplate(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
-	data := map[string]interface{}{
-		"Date": now.Date(),
-		"UTC": now.UTC(),
-		"Eastern": now.In(time.LoadLocation("America/New_York")),
-		"Pacific": now.In(time.LoadLocation("America/Los_Angeles"))
+	utc := now.UTC()
+	etz, eerr := time.LoadLocation("America/New_York")
+	ptz, perr := time.LoadLocation("America/Los_Angeles")
+	if eerr != nil || perr != nil {
+		fmt.Println("Attempted and failed to load TZ Data:")
+		fmt.Println(eerr)
+		fmt.Println(perr)
 	}
+	data := map[string]interface{}{
+		"UTC":     utc,
+		"Eastern": now.In(etz),
+		"Pacific": now.In(ptz)}
 	outputBuffer := new(bytes.Buffer)
 	responseTemplate.Execute(outputBuffer, data)
 	fmt.Fprintln(w, outputBuffer)
