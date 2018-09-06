@@ -38,9 +38,9 @@ func generatedTemplate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(perr)
 	}
 	data := map[string]interface{}{
-		"UTC":     utc,
-		"Eastern": now.In(etz),
-		"Pacific": now.In(ptz)}
+		"UTC":     utc.Parse("00:00:00"),
+		"Eastern": now.In(etz).Parse("00:00:00"),
+		"Pacific": now.In(ptz).Parse("00:00:00")}
 	outputBuffer := new(bytes.Buffer)
 	responseTemplate.Execute(outputBuffer, data)
 	fmt.Fprintln(w, outputBuffer)
