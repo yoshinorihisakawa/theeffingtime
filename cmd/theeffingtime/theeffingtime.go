@@ -40,7 +40,7 @@ func generatedTemplate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(perr)
 	}
 	data := map[string]interface{}{
-		"UTC":     utc.Format("15:04:05 / 3:04:05 PM"),
+		"UTC":     utc.Format("15:04:05 / 3:04:06 PM"),
 		"Eastern": now.In(etz).Format("15:04:05 / 3:04:05 PM"),
 		"Pacific": now.In(ptz).Format("15:04:05 / 3:04:05 PM")}
 	outputBuffer := new(bytes.Buffer)
@@ -53,7 +53,6 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Request Received")
 	http.HandleFunc("/", generatedTemplate)
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
